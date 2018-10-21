@@ -128,7 +128,7 @@ def is_possible_move(board, pos, possible_pos):
 # board_perform_move
 
 def board_perform_move(board, move):
-    new_board = board.copy()
+    new_board = copy.deepcopy(board)
     new_board = remove_marble(new_board, move[0])
 
     middle_position = check_middle_move_position(move)
@@ -157,12 +157,12 @@ def check_middle_move_position(move):
 
 
 def remove_marble(board, pos):
-    new_board = board.copy()
+    new_board = copy.deepcopy(board)
     new_board[pos_l(pos)][pos_c(pos)] = c_empty()
     return new_board
 
 def add_marble(board, pos):
-    new_board = board.copy()
+    new_board = copy.deepcopy(board)
     new_board[pos_l(pos)][pos_c(pos)] = c_peg()
     return new_board
 
@@ -185,6 +185,9 @@ class sol_state:
         self.board = board
         #self.action = action
 
+    def __lt__ (self, other):
+        return self.board < other.board
+
     def __repr__(self):
         return str(self.board)
 
@@ -194,19 +197,21 @@ class sol_state:
     def __eq__(self, other):
         return self.board== other.board
 
-    def __lt__ (self, other):
-        return self.board < other.board
 
 
 class solitaire(Problem):
     def __init__(self, board):
         self.initial = sol_state(board)
+        self.goal = []
+
 
     def actions(self, state):
         return board_moves(state.board)
 
+
     def result(self, state, action):
         return sol_state(board_perform_move(state.board, action))
+
 
     def goal_test(self, state):
         return check_if_is_solution(state.board)
@@ -218,9 +223,6 @@ class solitaire(Problem):
     def h(self, node):
     '''
 
-
-
-print( depth_first_tree_search(solitaire([["O","O","O","X"],["O","O","O","O"],["O","_","O","O"],["O","O","O","O"]])))
 
 #print(solitaire([["X","O","_","O","X"],["O","_","_","_","O"],["_","_","_","_","O"],["O","O","_","_","O"],["X","O","O","O","X"]]).goal_test(sol_state([["X","O","_","O","X"],["O","_","_","_","O"],["_","_","_","_","O"],["O","O","_","_","O"],["X","O","O","O","X"]])))
 
