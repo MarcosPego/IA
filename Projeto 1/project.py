@@ -1,5 +1,5 @@
-
 import search
+from search import *
 import copy
 
 # ---- First functions -------------------------------------------------
@@ -183,9 +183,12 @@ class sol_state:
     def __init__(self, board):
         self.board = board
 
-    def __lt (self, other):
+    #def __lt (self, other):
+    #    var = 'filler'
 
-
+class solitare(Problem):
+    def __init__(self, board):
+        self.p_initial = sol_state(board)
 
 
 
@@ -194,4 +197,4 @@ class sol_state:
 
 #print(b1)
 #    [["_","O","O","O","_"], ["O","_","O","_","O"], ["_","O","_","O","_"],["O","_","O","_","_"], ["_","O","_","_","_"]]
-#    /mnt/c/Users/Utilizador/Desktop/IA/Projeto 1
+#    /mnt/c/Users/Utilizador/Documents/GitHub/IA
