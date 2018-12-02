@@ -18,9 +18,10 @@ class Node():
         elif len(self.parents)==1:
             return [1-self.prob[evid[self.parents[0]]], self.prob[evid[self.parents[0]]]]
         else:
+            prob = self.prob
             for i in range(len(self.parents)):
-                prob = prob[evid[self.parents[0]
-            return [1-self.prob[evid[self.parents[0]]][evid[self.parents[1]]], self.prob[evid[self.parents[0]]][evid[self.parents[1]]]]
+                prob = prob[evid[self.parents[i]]]
+            return [1-prob, prob]
 
     def is_empty_parents(self):
         if self.parents:
@@ -31,16 +32,21 @@ class Node():
 
 class BN():
     def __init__(self, gra, prob):
-        self.graph
-        self.prob
+        self.graph = gra
+        self.prob  = prob
 
     def computePostProb(self, evid):
         pass
 
         return 0
 
-
     def computeJointProb(self, evid):
-        pass
+        starting_prob = []
+        final_prob=[]
+        jointProb = 1
+        for i in range(len(evid)):
+            starting_prob.append(self.prob[i].computeProb(evid))
+            final_prob.append(starting_prob[i][evid[i]])
+            jointProb *= final_prob[i]
 
-        return 0
+        return jointProb
