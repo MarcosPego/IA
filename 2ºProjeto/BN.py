@@ -36,9 +36,26 @@ class BN():
         self.prob  = prob
 
     def computePostProb(self, evid):
-        pass
+        prob1=0
+        prob2=0
+        array_probs = []
+        print(self.prob[0].computeProb((1,1,1,1,1)))
+        for i in range(2):
+            for j in range(2):
+                prob1 += self.prob[0].computeProb((1,i,j,1,1))[1]*self.prob[1].computeProb((1,i,j,1,1))[i]*self.prob[2].computeProb((1,i,j,1,1))[j]*self.prob[3].computeProb((1,i,j,1,1))[1]*self.prob[4].computeProb((1,i,j,1,1))[1]
+                #prob += self.prob[0].prob[0]*self.prob[1].prob[i]*self.prob[2].prob[i][j]*self.prob[3].prob[j]*self.prob[4].prob[j]
+                print(self.prob[0].computeProb((1,i,j,1,1))[1],self.prob[1].computeProb((1,i,j,1,1))[i],self.prob[2].computeProb((1,i,j,1,1))[j],self.prob[3].computeProb((1,i,j,1,1))[1],self.prob[4].computeProb((1,i,j,1,1))[1])
 
-        return 0
+        #for i in range(2):
+        #    for j in range(2):
+        #        prob2 += self.prob[0].computeProb((1,i,j,1,1))[0]*self.prob[1].computeProb((1,i,j,1,1))[i]*self.prob[2].computeProb((1,i,j,1,1))[j]*self.prob[3].computeProb((1,i,j,1,1))[1]*self.prob[4].computeProb((1,i,j,1,1))[1]
+
+        #print(prob1)
+        #print(prob2)
+        #alpha = 1/ (prob1+prob2)
+        #print(prob1+prob2)
+        #print(alpha)
+        return prob1/2.1
 
     def computeJointProb(self, evid):
         starting_prob = []

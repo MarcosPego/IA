@@ -31,7 +31,6 @@ prob = [p1,p2,p3,p4,p5]
 
 gra = [[],[],[0,1],[2],[2]]
 bn = BN(gra, prob)
-
 jp = []
 for e1 in [0,1]:
     for e2 in [0,1]:
@@ -39,6 +38,7 @@ for e1 in [0,1]:
             for e4 in [0,1]:
                 for e5 in [0,1]:
                     jp.append(bn.computeJointProb((e1, e2, e3, e4, e5)))
+
 
 print("sum joint %.3f (1)" % sum(jp))
 
