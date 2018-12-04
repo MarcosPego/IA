@@ -6,6 +6,7 @@ Created on Mon Oct 16 20:31:54 2017
 """
 import numpy as np
 import random
+import copy
 
 from tempfile import TemporaryFile
 outfile = TemporaryFile()
@@ -62,25 +63,25 @@ class finiteMDP:
 
 	def traces2Q(self, trace):
         # implementar esta funcao
+		while(1):
+			new_Q = copy.deepcopy(self.Q)
+			for i in range(len(trace)):
+				new_Q[int(trace[i][0])][int(trace[i][1])] = new_Q[int(trace[i][0])][int(trace[i][1])] + 0.01*(trace[i][3] + self.gamma*np.amax(new_Q[int(trace[i][2])]) - new_Q[int(trace[i][0])][int(trace[i][1])])
+			if(np.sqrt(sum(sum((new_Q-self.Q)**2)))<0.00000001):
+				self.Q = copy.deepcopy(new_Q)
+				return self.Q
+			self.Q = copy.deepcopy(new_Q)
 
-
-		for i in range(len(trace)):
-			#print("before",self.Q)
-			self.Q[int(trace[i][0])][int(trace[i][1])] = self.Q[int(trace[i][0])][int(trace[0][1])] + 0.8*(trace[i][3] + self.gamma*np.amax(self.Q[int(trace[i][2])]) - self.Q[int(trace[i][0])][int(trace[i][1])])
-
-		#print(self.Q)
 		return self.Q
 
 	def policy(self, x, poltype = 'exploration', par = []):
 		# implementar esta funcao
 
 		if poltype == 'exploitation':
-		    a= np.random.randint(2)
-
+		    a = np.argmax(self.Q[x])
 
 		elif poltype == 'exploration':
-			 self.alpha = np.random.randint(2)
-			 a =  self.alpha
+			a =  np.random.randint(2)
 
 
 		return a
