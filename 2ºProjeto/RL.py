@@ -21,8 +21,6 @@ class finiteMDP:
 		self.P = P
 		self.R = R
 		self.absorv = absorv
-		self.alpha = 0
-		self.counter = 4
 
 	def runPolicy(self, n, x0,  poltype = 'greedy', polpar=[]):
 		#nao alterar
@@ -67,7 +65,7 @@ class finiteMDP:
 			new_Q = copy.deepcopy(self.Q)
 			for i in range(len(trace)):
 				new_Q[int(trace[i][0])][int(trace[i][1])] = new_Q[int(trace[i][0])][int(trace[i][1])] + 0.01*(trace[i][3] + self.gamma*np.amax(new_Q[int(trace[i][2])]) - new_Q[int(trace[i][0])][int(trace[i][1])])
-			if(np.sqrt(sum(sum((new_Q-self.Q)**2)))<0.00000001):
+			if(np.sqrt(sum(sum((new_Q-self.Q)**2)))<0.00001):
 				self.Q = copy.deepcopy(new_Q)
 				return self.Q
 			self.Q = copy.deepcopy(new_Q)
@@ -78,7 +76,7 @@ class finiteMDP:
 		# implementar esta funcao
 
 		if poltype == 'exploitation':
-		    a = np.argmax(self.Q[x])
+			a = np.argmax(self.Q[x])
 
 		elif poltype == 'exploration':
 			a =  np.random.randint(2)
