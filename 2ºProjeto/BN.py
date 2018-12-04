@@ -91,21 +91,14 @@ class BN():
         i_evid = self.make_possible_evid(initial_p_evid)
 
         for i in range(len(i_evid)):
-            mult = 1
             #prob1 += self.prob[0].computeProb(i_evid[i])[i_evid[i][0]]*self.prob[1].computeProb(i_evid[i])[i_evid[i][1]]*self.prob[2].computeProb(i_evid[i])[i_evid[i][2]]*self.prob[3].computeProb(i_evid[i])[i_evid[i][3]]*self.prob[4].computeProb(i_evid[i])[i_evid[i][4]]
-
-            for j in range(len(i_evid[i])):
-                mult *= self.prob[j].computeProb(i_evid[i])[i_evid[i][j]]
-            prob1 += mult
+            prob1 += self.computeJointProb(i_evid[i])
 
         final_p_evid = self.define_final_possible_evid(evid)
         f_evid = self.make_possible_evid(final_p_evid)
         for i in range(len(f_evid)):
-            prob2 += self.prob[0].computeProb(f_evid[i])[f_evid[i][0]]*self.prob[1].computeProb(f_evid[i])[f_evid[i][1]]*self.prob[2].computeProb(f_evid[i])[f_evid[i][2]]*self.prob[3].computeProb(f_evid[i])[f_evid[i][3]]*self.prob[4].computeProb(f_evid[i])[f_evid[i][4]]
-
-            for j in range(len(i_evid[i])):
-                mult *= self.prob[j].computeProb(i_evid[i])[i_evid[i][j]]
-            prob2 += mult
+            #prob2 += self.prob[0].computeProb(f_evid[i])[f_evid[i][0]]*self.prob[1].computeProb(f_evid[i])[f_evid[i][1]]*self.prob[2].computeProb(f_evid[i])[f_evid[i][2]]*self.prob[3].computeProb(f_evid[i])[f_evid[i][3]]*self.prob[4].computeProb(f_evid[i])[f_evid[i][4]]
+            prob2 += self.computeJointProb(f_evid[i])
 
         return prob1 / ( prob1+prob2)
 
