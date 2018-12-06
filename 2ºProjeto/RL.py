@@ -1,3 +1,4 @@
+# Grupo 82, 87701 Ricardo Ferreira, 86472 Marcos Pêgo
 # -*- coding: utf-8 -*-
 """
 Created on Mon Oct 16 20:31:54 2017
@@ -61,8 +62,8 @@ class finiteMDP:
 
 	def traces2Q(self, trace):
         # implementar esta funcao
+		new_Q = copy.deepcopy(self.Q)
 		while(1):
-			new_Q = copy.deepcopy(self.Q)
 			for i in range(len(trace)):
 				new_Q[int(trace[i][0])][int(trace[i][1])] = new_Q[int(trace[i][0])][int(trace[i][1])] + 0.01*(trace[i][3] + self.gamma*np.amax(new_Q[int(trace[i][2])]) - new_Q[int(trace[i][0])][int(trace[i][1])])
 			if(np.sqrt(sum(sum((new_Q-self.Q)**2)))<0.00001):
@@ -79,7 +80,7 @@ class finiteMDP:
 			a = np.argmax(self.Q[x])
 
 		elif poltype == 'exploration':
-			a =  np.random.randint(2)
+			a =  np.random.randint(self.nA)
 
 
 		return a

@@ -11,7 +11,7 @@ np.set_printoptions(precision=4, suppress=True)
 from BN import *
 
 gra = [[],[],[0,1],[2],[2]]
-ev = (1,1,1,1,1)
+ev = (1,1,0,1,1)
 
 p1 = Node( np.array([.001]), gra[0] )                   # burglary
 print( "p1 false %.4e p1 true %.4e" % (p1.computeProb(ev)[0] , p1.computeProb(ev)[1]))
@@ -22,7 +22,7 @@ p3 = Node( np.array([[.001,.29],[.94,.95]]), gra[2] )   # alarm
 print( "p1 = 1, p2 = 1, p3 false %.4e p3 true %.4e" % (p3.computeProb(ev)[0] , p3.computeProb(ev)[1]))
 
 p4 = Node( np.array([.05,.9]), gra[3] )                 # johncalls
-
+print( "p1 = 1, p2 = 1, p3 false %.4e p3 true %.4e" % (p4.computeProb(ev)[0] , p4.computeProb(ev)[1]))
 
 p5 = Node( np.array([.01,.7]), gra[4] )                 # marycalls
 
@@ -40,6 +40,7 @@ for e1 in [0,1]:
                     jp.append(bn.computeJointProb((e1, e2, e3, e4, e5)))
 
 
+print(jp)
 print("sum joint %.3f (1)" % sum(jp))
 
 ev = (-1,[],[],1,1)

@@ -1,3 +1,4 @@
+# Grupo 82, 87701 Ricardo Ferreira, 86472 Marcos Pêgo
 # -*- coding: utf-8 -*-
 """
 Created on Mon Oct 15 15:51:49 2018
@@ -15,8 +16,6 @@ class Node():
     def computeProb(self, evid):
         if self.is_empty_parents():
             return [1-self.prob[0], self.prob[0]]
-        elif len(self.parents)==1:
-            return [1-self.prob[evid[self.parents[0]]], self.prob[evid[self.parents[0]]]]
         else:
             prob = self.prob
             for i in range(len(self.parents)):
@@ -35,12 +34,15 @@ class BN():
         self.graph = gra
         self.prob  = prob
 
-    def define_inital_possible_evid(self,evid):
+    def define_possible_evid(self,evid, control_flag):
         #initial_p_evid = [[1],[0,1],[0,1],[1],[1]]
         initial_p_evid = []
         for i in range(len(evid)):
             if evid[i] == -1:
-                initial_p_evid.append([1])
+                if control_flag == 1:
+                    initial_p_evid.append([1])
+                else:
+                    initial_p_evid.append([0])
             elif evid[i] == []:
                 initial_p_evid.append([0,1])
             else:
@@ -70,34 +72,21 @@ class BN():
 
         return i_evid
 
-
-    def define_final_possible_evid(self,evid):
-        #final_p_evid = [[0],[0,1],[0,1],[1],[1]]
-        final_p_evid = []
-        for i in range(len(evid)):
-            if evid[i] == -1:
-                final_p_evid.append([0])
-            elif evid[i] == []:
-                final_p_evid.append([0,1])
-            else:
-                final_p_evid.append([evid[i]])
-        return final_p_evid
-
     def computePostProb(self, evid):
         prob1=0
         prob2=0
 
-        initial_p_evid = self.define_inital_possible_evid(evid)
+        initial_p_evid = self.define_possible_evid(evid,1)
         i_evid = self.make_possible_evid(initial_p_evid)
+        print(initial_p_evid)
+        print(i_evid)
 
         for i in range(len(i_evid)):
-            #prob1 += self.prob[0].computeProb(i_evid[i])[i_evid[i][0]]*self.prob[1].computeProb(i_evid[i])[i_evid[i][1]]*self.prob[2].computeProb(i_evid[i])[i_evid[i][2]]*self.prob[3].computeProb(i_evid[i])[i_evid[i][3]]*self.prob[4].computeProb(i_evid[i])[i_evid[i][4]]
             prob1 += self.computeJointProb(i_evid[i])
 
-        final_p_evid = self.define_final_possible_evid(evid)
+        final_p_evid = self.define_possible_evid(evid,0)
         f_evid = self.make_possible_evid(final_p_evid)
         for i in range(len(f_evid)):
-            #prob2 += self.prob[0].computeProb(f_evid[i])[f_evid[i][0]]*self.prob[1].computeProb(f_evid[i])[f_evid[i][1]]*self.prob[2].computeProb(f_evid[i])[f_evid[i][2]]*self.prob[3].computeProb(f_evid[i])[f_evid[i][3]]*self.prob[4].computeProb(f_evid[i])[f_evid[i][4]]
             prob2 += self.computeJointProb(f_evid[i])
 
         return prob1 / ( prob1+prob2)
