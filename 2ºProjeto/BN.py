@@ -78,8 +78,6 @@ class BN():
 
         initial_p_evid = self.define_possible_evid(evid,1)
         i_evid = self.make_possible_evid(initial_p_evid)
-        print(initial_p_evid)
-        print(i_evid)
 
         for i in range(len(i_evid)):
             prob1 += self.computeJointProb(i_evid[i])
