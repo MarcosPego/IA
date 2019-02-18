@@ -41,7 +41,9 @@ J,traj = fmdp.runPolicy(3000,3,poltype = "exploration")
 data = np.load("Q1.npz")
 
 #print(fmdp.Q)
-#print(traj)
+for i in range(len(traj)):
+    if traj[i][0] == 5:
+        print(traj[i])
 Qr = fmdp.traces2Q(traj)
 
 #print(data['Q1'])
@@ -63,9 +65,6 @@ data = np.load("traj.npz")
 fmdp = RL.finiteMDP(8,4,0.9)
 q2 = fmdp.traces2Q(data['traj'])
 
-for i in range(len(data['traj'])):
-    if data['traj'][i][0]== 1:
-        print(data['traj'][i])
 
 #print(data['Q'])
 #print(np.sqrt(sum(sum((data['Q']-q2)**2))))
